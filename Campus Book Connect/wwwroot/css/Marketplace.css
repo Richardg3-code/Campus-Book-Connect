@@ -1,0 +1,38 @@
+﻿.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.book-card {
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.2s ease-in-out;
+}
+
+    .book-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+.add-btn {
+    background-color: #4CAF50;
+    color: white; 
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+    .add-btn:hover {
+        background-color: #45a049;
+    }
+

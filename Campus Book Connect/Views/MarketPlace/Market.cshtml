@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Campus_Book_Connect.Models.BookTable.Book>
+
+@{
+    ViewData["Title"] = "Marketplace";
+}
+
+<h2>Marketplace</h2>
+
+@if (!Model.Any())
+{
+    <p>No books available right now.</p>
+}
+else
+{
+    <div class="book-container">
+        @foreach (var book in Model)
+        {
+            <div class="book-card">
+                <h3>@book.Title</h3>
+                <p><strong>Author:</strong> @book.Author</p>
+                <p><strong>Price:</strong> $@book.Price</p>
+                <button class="add-btn" onclick="addToCart('@book.Title', @book.Price)">Add to Cart</button>
+
+            </div>
+        }
+    </div>
+}
+
+     <hr />
+    <h3>Your Cart</h3>
+ <ul id="cartItems">
+    <li>No items in cart yet.</li>
+</ul>
+            <p id="totalPrice"><strong>Total:</strong> $0.00</p>
+
+
+@section Scripts {
+    <script src="~/js/marketplace.js"></script>
+}
+

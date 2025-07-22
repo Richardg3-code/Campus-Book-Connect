@@ -6,7 +6,7 @@ namespace Campus_Book_Connect.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("Trade");
         }
     }
 }

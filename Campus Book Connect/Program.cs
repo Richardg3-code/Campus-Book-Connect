@@ -1,7 +1,17 @@
+using Campus_Book_Connect.Models;
+using Microsoft.EntityFrameworkCore;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// for the DB 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CBookDB")));
+
 
 var app = builder.Build();
 
@@ -26,4 +36,9 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
+
 app.Run();
+
+
+
+
