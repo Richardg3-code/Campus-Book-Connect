@@ -1,25 +1,30 @@
 using Campus_Book_Connect.Models;
 using Microsoft.EntityFrameworkCore;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Add services to the container
 builder.Services.AddControllersWithViews();
 
-// for the DB 
+//Configure SQL Server Database Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CBookDB")));
 
+//Enable Session support
+builder.Services.AddDistributedMemoryCache(); // Session storage in memory
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // User stays logged in for 30 mins
+    options.Cookie.HttpOnly = true; // More secure
+    options.Cookie.IsEssential = true; // Required for session to work without consent
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -28,6 +33,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//Enable session middleware before MVC
+app.UseSession();
+
 app.MapStaticAssets();
 
 app.MapControllerRoute(
@@ -35,10 +43,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
-
 app.Run();
-
-
-
-

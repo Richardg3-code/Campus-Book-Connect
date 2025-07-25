@@ -10,16 +10,30 @@ namespace Campus_Book_Connect.Models
         {
         }
 
-        // we can add this to the db just store the users information 
-       // public DbSet<User> Users { get; set; }
-
-
+        // Existing Books table
         public DbSet<Book> Books { get; set; }
 
+        // Users table for login/registration
+        public DbSet<User> Users { get; set; }
 
-
-
-        // we can store transcations but idk we can delete if its too difficult
+        // Optional: Uncomment if you later implement transactions
         // public DbSet<Transaction> Transactions { get; set; }
+
+        // enforces unique Username & Email
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Unique constraint for Username
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            // Unique constraint for Email
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+        }
     }
 }
+

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,7 +11,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Campus_Book_Connect.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/marketplace.css" />
-
 </head>
 <body>
     <header>
@@ -33,12 +34,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-controller="Trade" asp-action="Index">Trade</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="User" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link text-white" asp-controller="User" asp-action="Register">Register</a>
-                        </li>
+
+                        @* ✅ Dynamic Login/Logout *@
+                        @if (Context.Session.GetString("User") != null)
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link text-white">
+                                    Welcome, @Context.Session.GetString("User")!
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="User" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="User" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="User" asp-action="Register">Sign Up</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
