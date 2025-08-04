@@ -1,0 +1,24 @@
+﻿@model Campus_Book_Connect.Models.User
+
+@{
+    ViewData["Title"] = "Your Profile";
+}
+
+<h2>Your Profile</h2>
+
+<div class="card shadow-sm p-4 mb-4 bg-light">
+    <h4 class="mb-3">Welcome, @Model.Username!</h4>
+
+    <dl class="row">
+        <dt class="col-sm-3">Username</dt>
+        <dd class="col-sm-9">@Model.Username</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Registered On</dt>
+        <dd class="col-sm-9">@Model.CreatedAt?.ToString("MMMM dd, yyyy")</dd>
+    </dl>
+</div>
+
+<a class="btn btn-primary" href="/">Back to Home</a>

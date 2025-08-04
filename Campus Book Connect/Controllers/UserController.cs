@@ -74,5 +74,23 @@ namespace Campus_Book_Connect.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+
+        public IActionResult Profile()
+        {
+            var username = HttpContext.Session.GetString("User");
+            if (username == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
     }
 }
