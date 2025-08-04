@@ -1,5 +1,7 @@
 ﻿@{
     var username = Context.Session.GetString("User");
+    var currentCont = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAct = ViewContext.RouteData.Values["action"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -14,9 +16,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <style>
-        /* Override dropdown menu background and text */
         .dropdown-menu.custom-dropdown {
-            background-color: #0d6efd; /* Bootstrap primary blue */
+            background-color: #0d6efd;
         }
 
             .dropdown-menu.custom-dropdown .dropdown-item {
@@ -25,7 +26,7 @@
 
                 .dropdown-menu.custom-dropdown .dropdown-item:hover,
                 .dropdown-menu.custom-dropdown .dropdown-item:focus {
-                    background-color: #0056b3; /* darker blue on hover */
+                    background-color: #0056b3;
                     color: white;
                 }
     </style>
@@ -39,46 +40,29 @@
                         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-<<<<<<< Updated upstream
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    <ul class="navbar-nav">
-                        @* Navbar current page highlight *@
-                        @{
-                            var currentCont = ViewContext.RouteData.Values["controller"]?.ToString();
-                            var currentAct = ViewContext.RouteData.Values["action"]?.ToString();
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link text-white @(currentCont == "Home" && currentAct == "Index" ? "active" : "")" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white @(currentCont == "Marketplace" ? "active" : "")" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
-                        </li>
-                        <li class="nav-item">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-controller="Marketplace" asp-action="Sell">Sell a Book</a>
-                        </li>
-
-                      
-                        @* ✅ Dynamic Login/Logout *@
-                        @if (Context.Session.GetString("User") != null)
-=======
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white @(currentCont == "Home" && currentAct == "Index" ? "active" : "")"
+                               asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
+                            <a class="nav-link text-white @(currentCont == "Marketplace" && currentAct == "Index" ? "active" : "")"
+                               asp-controller="Marketplace" asp-action="Index">Marketplace</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Trade" asp-action="Index">Trade Center</a>
+                            <a class="nav-link text-white @(currentCont == "Marketplace" && currentAct == "Sell" ? "active" : "")"
+                               asp-controller="Marketplace" asp-action="Sell">Sell a Book</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white @(currentCont == "Trade" ? "active" : "")"
+                               asp-controller="Trade" asp-action="Index">Trade Center</a>
                         </li>
                     </ul>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         @if (!string.IsNullOrEmpty(username))
->>>>>>> Stashed changes
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -97,7 +81,7 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="User" asp-action="Login">Login</a>
+                                <a class="nav-link text-white" asp-controller="User" asp-action="Login">Login</a>
                             </li>
                         }
                     </ul>
