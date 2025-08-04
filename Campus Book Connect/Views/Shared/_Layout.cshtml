@@ -37,9 +37,11 @@
                             <a class="nav-link text-white @(currentCont == "Marketplace" ? "active" : "")" asp-controller="Marketplace" asp-action="Index">Marketplace</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white @(currentCont == "Trade" ? "active" : "")" asp-controller="Trade" asp-action="Index">Trade</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-controller="Marketplace" asp-action="Sell">Sell a Book</a>
                         </li>
 
+                      
                         @* ✅ Dynamic Login/Logout *@
                         @if (Context.Session.GetString("User") != null)
                         {

@@ -1,32 +1,45 @@
-﻿
-// this is the adding car method 
-let cart = [];
+﻿let cart = [];
 let total = 0;
 
 function addToCart(title, price) {
-
-    // adding up the totla price thats inside the cart 
     cart.push({ title, price });
-    total += price; 
-    renderCart();
+    total += price;
+    updateCartDisplay();
 }
 
-function renderCart() {
-    
-    const cartList = document.getElementById('cartItems');
-    const totalPrice = document.getElementById('totalPrice');
+function updateCartDisplay() {
+    const cartList = document.getElementById("cartItems");
+    cartList.innerHTML = "";
 
-    cartList.innerHTML = '';
+    if (cart.length === 0) {
+        cartList.innerHTML = "<li>No items in cart yet.</li>";
+    } else {
+        cart.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = `${item.title} - $${item.price.toFixed(2)}`;
+            cartList.appendChild(li);
+        });
+    }
 
-
-    //looping ech element insidde the cart
-    cart.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = `${item.title} — $${item.price.toFixed(2)}`;
-        cartList.appendChild(li);
-    });
-
-    //updating the total price shown on the page 
-    totalPrice.innerHTML = `<strong>Total:</strong> $${total.toFixed(2)}`;
+    document.getElementById("totalPrice").innerHTML = `<strong>Total:</strong> $${total.toFixed(2)}`;
 }
 
+document.getElementById("checkoutBtn").addEventListener("click", function () {
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+    }
+
+    // Clear cart
+    cart = [];
+    total = 0;
+    updateCartDisplay();
+
+    // Show thank you message
+    const success = document.getElementById("successMessage");
+    success.style.display = "block";
+
+    setTimeout(() => {
+        success.style.display = "none";
+    }, 4000);
+});

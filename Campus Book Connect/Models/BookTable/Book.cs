@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 // this is the book atributes 
 namespace Campus_Book_Connect.Models.BookTable
 {
@@ -15,5 +17,7 @@ namespace Campus_Book_Connect.Models.BookTable
         public decimal Price { get; set; }
 
         public string? Description { get; set; }
+       
+
     }
 }

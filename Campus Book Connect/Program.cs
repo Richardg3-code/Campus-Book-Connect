@@ -1,4 +1,5 @@
 using Campus_Book_Connect.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // More secure
     options.Cookie.IsEssential = true; // Required for session to work without consent
 });
+
+
+
+
 
 var app = builder.Build();
 

@@ -6,6 +6,14 @@
 
 <h2>Marketplace</h2>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+
 @if (!Model.Any())
 {
     <p>No books available right now.</p>
@@ -20,21 +28,27 @@ else
                 <p><strong>Author:</strong> @book.Author</p>
                 <p><strong>Price:</strong> $@book.Price</p>
                 <button class="add-btn" onclick="addToCart('@book.Title', @book.Price)">Add to Cart</button>
-
             </div>
         }
+
     </div>
 }
 
-     <hr />
+    <hr />
     <h3>Your Cart</h3>
- <ul id="cartItems">
+    <ul id="cartItems">
     <li>No items in cart yet.</li>
-</ul>
-            <p id="totalPrice"><strong>Total:</strong> $0.00</p>
+    </ul>
+    <p id="totalPrice"><strong>Total:</strong> $0.00</p>
 
+
+<button id="checkoutBtn" class="checkout-btn">Checkout</button>
+
+
+<p id="successMessage" style="color: green; display: none; font-weight: bold;">
+    Thanks for your purchase!
+</p>
 
 @section Scripts {
     <script src="~/js/marketplace.js"></script>
 }
-

@@ -16,9 +16,7 @@ namespace Campus_Book_Connect.Models
         // Users table for login/registration
         public DbSet<User> Users { get; set; }
 
-        // Optional: Uncomment if you later implement transactions
-        // public DbSet<Transaction> Transactions { get; set; }
-
+      
         // enforces unique Username & Email
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

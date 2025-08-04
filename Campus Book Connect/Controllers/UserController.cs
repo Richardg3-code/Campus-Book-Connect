@@ -7,9 +7,9 @@ namespace Campus_Book_Connect.Controllers
 {
     public class UserController : Controller
     {
-        private readonly AppDbContext _context;  // ✅ Use AppDbContext instead
+        private readonly AppDbContext _context;  //  Use AppDbContext instead
 
-        public UserController(AppDbContext context) // ✅ Inject AppDbContext
+        public UserController(AppDbContext context) //  Inject AppDbContext
         {
             _context = context;
         }
@@ -27,7 +27,7 @@ namespace Campus_Book_Connect.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Username == username);
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
-                // ✅ Save session
+                //  Save session
                 HttpContext.Session.SetString("User", user.Username);
 
                 return RedirectToAction("Index", "Home");
