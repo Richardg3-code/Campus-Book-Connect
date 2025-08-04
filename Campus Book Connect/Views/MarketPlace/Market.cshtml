@@ -23,13 +23,19 @@ else
     <div class="book-container">
         @foreach (var book in Model)
         {
-            <div class="book-card">
+            <div class="book-card" id="book-@book.Id">
                 <h3>@book.Title</h3>
                 <p><strong>Author:</strong> @book.Author</p>
                 <p><strong>Price:</strong> $@book.Price</p>
-                <button class="add-btn" onclick="addToCart('@book.Title', @book.Price)">Add to Cart</button>
+                <button class="btn btn-success buy-btn"
+                        data-id="@book.Id"
+                        data-title="@book.Title"
+                        data-price="@book.Price">
+                    Buy
+                </button>
             </div>
         }
+
 
     </div>
 }
@@ -43,6 +49,7 @@ else
 
 
 <button id="checkoutBtn" class="checkout-btn">Checkout</button>
+
 
 
 <p id="successMessage" style="color: green; display: none; font-weight: bold;">

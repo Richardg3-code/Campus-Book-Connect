@@ -14,6 +14,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/marketplace.css" asp-append-version="true" />
+
 
     <style>
         .dropdown-menu.custom-dropdown {
@@ -55,10 +57,7 @@
                             <a class="nav-link text-white @(currentCont == "Marketplace" && currentAct == "Sell" ? "active" : "")"
                                asp-controller="Marketplace" asp-action="Sell">Sell a Book</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white @(currentCont == "Trade" ? "active" : "")"
-                               asp-controller="Trade" asp-action="Index">Trade Center</a>
-                        </li>
+                        
                     </ul>
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -90,7 +89,7 @@
         </nav>
     </header>
 
-    <main role="main" class="container mt-4">
+    <main role="main" class="@(currentCont == "Marketplace" ? "" : "container mt-4")">
         @RenderBody()
     </main>
 

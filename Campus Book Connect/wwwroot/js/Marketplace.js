@@ -1,45 +1,48 @@
 ﻿let cart = [];
-let total = 0;
 
-function addToCart(title, price) {
-    cart.push({ title, price });
-    total += price;
-    updateCartDisplay();
-}
+document.querySelectorAll('.buy-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const bookId = parseInt(this.getAttribute('data-id'));
+        const title = this.getAttribute('data-title');
+        const price = parseFloat(this.getAttribute('data-price'));
 
-function updateCartDisplay() {
-    const cartList = document.getElementById("cartItems");
-    cartList.innerHTML = "";
+        if (cart.some(item => item.id === bookId)) {
+            alert(`"${title}" is already in your cart.`);
+            return;
+        }
 
-    if (cart.length === 0) {
-        cartList.innerHTML = "<li>No items in cart yet.</li>";
-    } else {
+        cart.push({ id: bookId, title: title, price: price });
+
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = "";
+        let total = 0;
+
         cart.forEach(item => {
-            const li = document.createElement("li");
+            const li = document.createElement('li');
             li.textContent = `${item.title} - $${item.price.toFixed(2)}`;
-            cartList.appendChild(li);
+            cartItems.appendChild(li);
+            total += item.price;
         });
-    }
 
-    document.getElementById("totalPrice").innerHTML = `<strong>Total:</strong> $${total.toFixed(2)}`;
-}
+        document.getElementById('totalPrice').innerHTML = `<strong>Total:</strong> $${total.toFixed(2)}`;
+    });
+});
 
-document.getElementById("checkoutBtn").addEventListener("click", function () {
-    if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return;
-    }
+document.getElementById('checkoutBtn').addEventListener('click', function () {
+    cart.forEach(item => {
+        const bookCard = document.getElementById(`book-${item.id}`);
+        if (bookCard) {
+            bookCard.remove();
+        }
+    });
 
-    // Clear cart
     cart = [];
-    total = 0;
-    updateCartDisplay();
+    document.getElementById('cartItems').innerHTML = '<li>No items in cart yet.</li>';
+    document.getElementById('totalPrice').innerHTML = '<strong>Total:</strong> $0.00';
 
-    // Show thank you message
-    const success = document.getElementById("successMessage");
-    success.style.display = "block";
-
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
     setTimeout(() => {
-        success.style.display = "none";
-    }, 4000);
+        successMessage.style.display = 'none';
+    }, 3000);
 });
