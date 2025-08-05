@@ -15,7 +15,10 @@
 
 @if (!Model.Any())
 {
-    <p class="text-muted">No books available right now.</p>
+    <div class="text-center text-muted">
+        <i class="fas fa-box-open fa-2x mb-2" style="color: var(--primary);"></i>
+        <p>No books available right now.</p>
+    </div>
 }
 else
 {
@@ -24,11 +27,15 @@ else
         {
             <div class="col">
                 <div class="card h-100 shadow-sm">
+                    @* Optional image section (if your Book model supports an ImageUrl) *@
+                    @* <img src="@book.ImageUrl" class="card-img-top" alt="@book.Title" /> *@
+
                     <div class="card-body">
                         <h5 class="card-title">@book.Title</h5>
                         <p class="card-text"><strong>Author:</strong> @book.Author</p>
                         <p class="card-text"><strong>Price:</strong> $@book.Price</p>
-                        <button class="btn btn-success buy-btn"
+
+                        <button class="btn btn-primary buy-btn"
                                 data-id="@book.Id"
                                 data-title="@book.Title"
                                 data-price="@book.Price">
@@ -44,7 +51,8 @@ else
 <hr class="my-5" />
 
 <h3 class="mb-3">🛒 Your Cart</h3>
-<ul id="cartItems" class="list-group mb-3">
+
+<ul id="cartItems" class="list-group mb-3 shadow-sm rounded">
     <li class="list-group-item text-muted">No items in cart yet.</li>
 </ul>
 

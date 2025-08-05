@@ -4,46 +4,46 @@
     ViewData["Title"] = "Sell a Book";
 }
 
-<h2>Sell a Book</h2>
+<h2 class="mb-4">📘 Sell a Book</h2>
 
-
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <h4>Sell a Book</h4>
+<div class="container">
+    <div class="card shadow-sm border-0">
+        <div class="card-header text-white" style="background-color: var(--primary);">
+            <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Post a Book for Sale</h5>
         </div>
         <div class="card-body">
             <form asp-action="Sell" method="post" id="sellForm">
-
                 <div class="mb-3">
-                    <label asp-for="Title" class="form-label"></label>
+                    <label asp-for="Title" class="form-label">Book Title</label>
                     <input asp-for="Title" class="form-control" placeholder="Enter book title" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Author" class="form-label"></label>
+                    <label asp-for="Author" class="form-label">Author</label>
                     <input asp-for="Author" class="form-control" placeholder="Enter author name" />
                     <span asp-validation-for="Author" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Price" class="form-label"></label>
+                    <label asp-for="Price" class="form-label">Price ($)</label>
                     <input asp-for="Price" id="priceInput" class="form-control" placeholder="Enter price" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
                     <span id="priceError" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Description" class="form-label"></label>
-<textarea asp-for="Description" class="form-control" placeholder="Optional book description"></textarea>
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <textarea asp-for="Description" class="form-control" placeholder="Optional book description"></textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Post Book</button>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-upload me-2"></i>Post Book
+                </button>
             </form>
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     <script src="~/js/sell-validation.js"></script>
