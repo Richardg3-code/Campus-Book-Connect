@@ -4,7 +4,7 @@
     ViewData["Title"] = "Marketplace";
 }
 
-<h2>Marketplace</h2>
+<h2 class="mb-4">📚 Marketplace</h2>
 
 @if (TempData["SuccessMessage"] != null)
 {
@@ -13,46 +13,48 @@
     </div>
 }
 
-
 @if (!Model.Any())
 {
-    <p>No books available right now.</p>
+    <p class="text-muted">No books available right now.</p>
 }
 else
 {
-    <div class="book-container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var book in Model)
         {
-            <div class="book-card" id="book-@book.Id">
-                <h3>@book.Title</h3>
-                <p><strong>Author:</strong> @book.Author</p>
-                <p><strong>Price:</strong> $@book.Price</p>
-                <button class="btn btn-success buy-btn"
-                        data-id="@book.Id"
-                        data-title="@book.Title"
-                        data-price="@book.Price">
-                    Buy
-                </button>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text"><strong>Author:</strong> @book.Author</p>
+                        <p class="card-text"><strong>Price:</strong> $@book.Price</p>
+                        <button class="btn btn-success buy-btn"
+                                data-id="@book.Id"
+                                data-title="@book.Title"
+                                data-price="@book.Price">
+                            <i class="fas fa-cart-plus me-1"></i> Buy
+                        </button>
+                    </div>
+                </div>
             </div>
         }
-
-
     </div>
 }
 
-    <hr />
-    <h3>Your Cart</h3>
-    <ul id="cartItems">
-    <li>No items in cart yet.</li>
-    </ul>
-    <p id="totalPrice"><strong>Total:</strong> $0.00</p>
+<hr class="my-5" />
 
+<h3 class="mb-3">🛒 Your Cart</h3>
+<ul id="cartItems" class="list-group mb-3">
+    <li class="list-group-item text-muted">No items in cart yet.</li>
+</ul>
 
-<button id="checkoutBtn" class="checkout-btn">Checkout</button>
+<p id="totalPrice" class="fw-bold fs-5"><strong>Total:</strong> $0.00</p>
 
+<button id="checkoutBtn" class="btn btn-primary mb-4">
+    <i class="fas fa-credit-card me-1"></i> Checkout
+</button>
 
-
-<p id="successMessage" style="color: green; display: none; font-weight: bold;">
+<p id="successMessage" class="text-success fw-bold" style="display: none;">
     Thanks for your purchase!
 </p>
 

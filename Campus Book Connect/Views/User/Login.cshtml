@@ -3,10 +3,11 @@
 }
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
-    <div class="card shadow-sm" style="width: 400px;">
+    <div class="card shadow-sm border-0" style="width: 400px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h4>
+        </div>
         <div class="card-body">
-            <h3 class="card-title text-center mb-4">Login</h3>
-
             @if (!string.IsNullOrEmpty(ViewBag.Error))
             {
                 <div class="alert alert-danger text-center">@ViewBag.Error</div>
@@ -23,12 +24,14 @@
                     <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-arrow-right-to-bracket me-2"></i>Login
+                </button>
             </form>
 
             <div class="text-center mt-3">
                 <span>New here?</span>
-                <a asp-action="Register" class="text-decoration-none">Sign Up</a>
+                <a asp-action="Register" class="text-decoration-none fw-semibold" style="color: #2575fc;">Sign Up</a>
             </div>
         </div>
     </div>

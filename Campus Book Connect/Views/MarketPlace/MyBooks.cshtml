@@ -1,22 +1,32 @@
 ﻿@model IEnumerable<Campus_Book_Connect.Models.BookTable.Book>
 
-<h2>My Listings</h2>
+@{
+    ViewData["Title"] = "My Listings";
+}
+
+<h2 class="mb-4">📚 My Listings</h2>
 
 @if (!Model.Any())
 {
-    <p>You haven’t listed any books yet.</p>
+    <div class="alert alert-info">
+        You haven’t listed any books yet.
+    </div>
 }
 else
 {
-    <div class="book-container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var book in Model)
         {
-        <div class="book-card">
-             <h3>@book.Title</h3>
-             <p><strong>Author:</strong> @book.Author</p>
-              <p><strong>Price:</strong> $@book.Price</p>
-             <p><strong>Description:</strong> @book.Description</p>
-        </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text"><strong>Author:</strong> @book.Author</p>
+                        <p class="card-text"><strong>Price:</strong> $@book.Price</p>
+                        <p class="card-text text-muted"><strong>Description:</strong> @book.Description</p>
+                    </div>
+                </div>
+            </div>
         }
     </div>
 }
