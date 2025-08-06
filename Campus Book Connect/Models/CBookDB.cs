@@ -28,9 +28,9 @@ namespace Campus_Book_Connect.Models
                 .IsUnique();
 
             // Unique constraint for Email
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
-                .IsUnique();
+            modelBuilder.Entity<Book>()
+               .Property(b => b.Price)
+               .HasColumnType("decimal(18,2)");
         }
     }
 }
