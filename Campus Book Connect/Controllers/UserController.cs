@@ -29,6 +29,7 @@ namespace Campus_Book_Connect.Controllers
             {
                 //  Save session
                 HttpContext.Session.SetString("User", user.Username);
+                HttpContext.Session.SetInt32("UserId", user.UserId);
 
                 return RedirectToAction("Index", "Home");
             }

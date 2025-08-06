@@ -1,0 +1,36 @@
+﻿@model List<Campus_Book_Connect.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Transaction History";
+}
+
+<h2>Transaction History</h2>
+
+@if (!Model.Any())
+{
+    <p>You have not made any purchases yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+                <th>Price Paid</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.Book.Title</td>
+                    <td>@t.Book.Author</td>
+                    <td>$@t.PriceAtPurchase</td>
+                    <td>@t.TransactionDate.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

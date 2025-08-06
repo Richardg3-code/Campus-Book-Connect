@@ -11,7 +11,7 @@ document.querySelectorAll('.buy-btn').forEach(button => {
             return;
         }
 
-        cart.push({ id: bookId, title: title, price: price });
+        cart.push({ id: bookId, title, price });
 
         const cartItems = document.getElementById('cartItems');
         cartItems.innerHTML = "";
@@ -29,20 +29,7 @@ document.querySelectorAll('.buy-btn').forEach(button => {
 });
 
 document.getElementById('checkoutBtn').addEventListener('click', function () {
-    cart.forEach(item => {
-        const bookCard = document.getElementById(`book-${item.id}`);
-        if (bookCard) {
-            bookCard.remove();
-        }
-    });
-
-    cart = [];
-    document.getElementById('cartItems').innerHTML = '<li>No items in cart yet.</li>';
-    document.getElementById('totalPrice').innerHTML = '<strong>Total:</strong> $0.00';
-
-    const successMessage = document.getElementById('successMessage');
-    successMessage.style.display = 'block';
-    setTimeout(() => {
-        successMessage.style.display = 'none';
-    }, 3000);
+    const bookIdsInput = document.getElementById('bookIdsInput');
+    const bookIds = cart.map(item => item.id);
+    bookIdsInput.value = bookIds.join(',');
 });

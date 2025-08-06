@@ -32,6 +32,9 @@ namespace Campus_Book_Connect.Models
                .Property(b => b.Price)
                .HasColumnType("decimal(18,2)");
         }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
     }
 }
 

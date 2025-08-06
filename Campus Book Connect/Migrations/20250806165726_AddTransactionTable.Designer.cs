@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Book_Connect.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250804183710_RemoveSellerId")]
-    partial class RemoveSellerId
+    [Migration("20250806165726_AddTransactionTable")]
+    partial class AddTransactionTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -52,6 +52,35 @@ namespace Campus_Book_Connect.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("Campus_Book_Connect.Models.Transaction", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BuyerId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PriceAtPurchase")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("BuyerId");
+
+                    b.ToTable("Transactions");
+                });
+
             modelBuilder.Entity("Campus_Book_Connect.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -60,7 +89,7 @@ namespace Campus_Book_Connect.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -79,13 +108,29 @@ namespace Campus_Book_Connect.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("Username")
                         .IsUnique();
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Campus_Book_Connect.Models.Transaction", b =>
+                {
+                    b.HasOne("Campus_Book_Connect.Models.BookTable.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Campus_Book_Connect.Models.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Buyer");
                 });
 #pragma warning restore 612, 618
         }

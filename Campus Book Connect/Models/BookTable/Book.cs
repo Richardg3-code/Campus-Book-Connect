@@ -1,23 +1,26 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-// this is the book atributes 
+
 namespace Campus_Book_Connect.Models.BookTable
 {
     public class Book
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; }
-
-        public string Author { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required]
-        public decimal Price { get; set; }
+        public string Author { get; set; } = string.Empty;
 
         public string? Description { get; set; }
-       
 
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Price { get; set; }
+
+        public bool IsSold { get; set; } = false;
+
+        public int? SellerId { get; set; } // Optional: if you're tracking sellers
     }
 }
