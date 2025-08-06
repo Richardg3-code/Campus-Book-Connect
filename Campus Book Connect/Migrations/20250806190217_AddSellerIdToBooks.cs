@@ -1,35 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Campus_Book_Connect.Migrations
 {
     /// <inheritdoc />
-    public partial class AddIsSoldToBook : Migration
+    public partial class AddSellerIdToBooks : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsSold",
+            migrationBuilder.AddColumn<int>(
+                name: "SellerId",
                 table: "Books",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+                type: "int",
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsSold",
+                name: "SellerId",
                 table: "Books");
         }
     }
-
-
-
-
 }

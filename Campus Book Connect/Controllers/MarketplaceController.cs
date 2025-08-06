@@ -40,30 +40,7 @@ namespace Campus_Book_Connect.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Sell(Book book)
-        {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("User")))
-            {
-                return RedirectToAction("Login", "User"); // Redirect to login
-            }
-
-            if (ModelState.IsValid)
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-               
-
-                _context.Books.Add(book);
-                await _context.SaveChangesAsync();
-
-                TempData["SuccessMessage"] = "Book listed successfully!";
-                return RedirectToAction("Index");
-            }
-
-            return View(book);
-        }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Buy(string bookIds)
@@ -143,6 +120,22 @@ namespace Campus_Book_Connect.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Sell(Book book)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(book); // redisplay form with validation errors
+            }
+
+            book.IsSold = false; // new books are not sold
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Book posted successfully!";
+            return RedirectToAction("Index");
+        }
 
 
 

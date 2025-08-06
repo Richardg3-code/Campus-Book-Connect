@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Campus_Book_Connect.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250806172027_AddIsSoldToBook")]
-    partial class AddIsSoldToBook
+    [Migration("20250806190731_AddIsSoldColumn")]
+    partial class AddIsSoldColumn
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace Campus_Book_Connect.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("SellerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
