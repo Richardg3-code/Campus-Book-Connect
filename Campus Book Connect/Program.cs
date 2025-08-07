@@ -1,3 +1,4 @@
+using Campus_Book_Connect.Data;
 using Campus_Book_Connect.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true; // More secure
     options.Cookie.IsEssential = true; // Required for session to work without consent
 });
+
 
 
 
@@ -47,5 +49,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    Campus_Book_Connect.Data.DbInitializer.Seed(context);
+}
+
 
 app.Run();
