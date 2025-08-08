@@ -1,30 +1,34 @@
 ﻿using Campus_Book_Connect.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Campus_Book_Connect.Controllers
+[Authorize]
+public class TransactionController : Controller
 {
-    public class TransactionController : Controller
+    private readonly AppDbContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public TransactionController(AppDbContext context, UserManager<IdentityUser> userManager)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+        _userManager = userManager;
+    }
 
-        public TransactionController(AppDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<IActionResult> History()
+    {
+        var identityUserId = _userManager.GetUserId(User);
+        var appUserId = await _context.AppUsers
+            .Where(u => u.IdentityUserId == identityUserId)
+            .Select(u => u.UserId)
+            .SingleAsync();
 
-        public IActionResult History()
-        {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction("Login", "User");
+        var transactions = await _context.Transactions
+            .Include(t => t.Book)
+            .Where(t => t.BuyerId == appUserId)
+            .ToListAsync();
 
-            var transactions = _context.Transactions
-                .Include(t => t.Book)
-                .Where(t => t.BuyerId == userId)
-                .ToList();
-
-            return View(transactions);
-        }
+        return View(transactions);
     }
 }
