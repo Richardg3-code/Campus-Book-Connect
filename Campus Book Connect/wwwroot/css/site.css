@@ -49,3 +49,7 @@ body {
 .navbar-nav .nav-link.active {
     background-color: #0a58ca;
 }
+
+.nav-pills .nav-link.active {
+    color: #4A3267;
+}

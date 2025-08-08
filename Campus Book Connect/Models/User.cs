@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Campus_Book_Connect.Models
@@ -21,6 +22,9 @@ namespace Campus_Book_Connect.Models
         public string PasswordHash { get; set; } = string.Empty;
 
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public string? IdentityUserId { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
 
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Campus_Book_Connect.Models.BookTable;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Campus_Book_Connect.Models
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -14,7 +16,7 @@ namespace Campus_Book_Connect.Models
         public DbSet<Book> Books { get; set; }
 
         // Users table for login/registration
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> AppUsers { get; set; }
 
       
         // enforces unique Username & Email
@@ -26,6 +28,12 @@ namespace Campus_Book_Connect.Models
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
+
+            // for IdentityUser one to one relationship
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.IdentityUser)
+                .WithOne()
+                .HasForeignKey<User>(u => u.IdentityUserId);
 
             // Unique constraint for Email
             modelBuilder.Entity<Book>()

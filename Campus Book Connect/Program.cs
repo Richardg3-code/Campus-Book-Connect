@@ -7,10 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Add services to the container
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 //Configure SQL Server Database Context
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CBookDB")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppDbContext>();
 
 //Enable Session support
 builder.Services.AddDistributedMemoryCache(); // Session storage in memory
@@ -21,7 +24,17 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true; // Required for session to work without consent
 });
 
-
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 1;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredUniqueChars = 0;
+    options.Password.RequireDigit = false;
+    options.Password.RequireUppercase = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false;
+});
 
 
 
@@ -36,19 +49,22 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 //Enable session middleware before MVC
 app.UseSession();
 
-app.MapStaticAssets();
+//app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+app.MapRazorPages();
 
 
 using (var scope = app.Services.CreateScope())
