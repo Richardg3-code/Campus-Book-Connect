@@ -4,24 +4,18 @@
 
 namespace Campus_Book_Connect.Migrations
 {
-    /// <inheritdoc />
     public partial class AddIsSoldColumn : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsSold",
-                table: "Books",
-                nullable: false);
+            // Add the column only if it doesn't exist
+            migrationBuilder.Sql(@"");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "IsSold",
-                table: "Books");
+            // Remove the column only if it exists
+            migrationBuilder.Sql(@"");
         }
     }
 }
