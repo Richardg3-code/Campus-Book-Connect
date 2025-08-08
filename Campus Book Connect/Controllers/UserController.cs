@@ -26,13 +26,14 @@ namespace Campus_Book_Connect.Controllers
 
         // -------- Register --------
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register() => View();
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(string username, string email, string password)
         {
-            // Basic duplicate username check against your custom table
             if (await _context.AppUsers.AnyAsync(u => u.Username == username))
             {
                 ViewBag.Error = "Username already exists.";
@@ -54,6 +55,7 @@ namespace Campus_Book_Connect.Controllers
                 IdentityUserId = idUser.Id,
                 Username = username,
                 Email = email,
+                // (Identity already hashes its own password; this is just for your custom table)
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
             };
 
@@ -66,9 +68,11 @@ namespace Campus_Book_Connect.Controllers
 
         // -------- Login / Logout --------
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login() => View();
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string username, string password)
         {
@@ -85,7 +89,8 @@ namespace Campus_Book_Connect.Controllers
             return View();
         }
 
-        [HttpPost]
+       
+        [HttpPost("/User/Logout")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
@@ -98,21 +103,22 @@ namespace Campus_Book_Connect.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile()
         {
-            var identityUserId = _userManager.GetUserId(User); // string id from AspNetUsers
+            var identityUserId = _userManager.GetUserId(User);
             if (identityUserId == null)
                 return RedirectToAction(nameof(Login));
 
             var appUser = await _context.AppUsers
-                                        .SingleOrDefaultAsync(u => u.IdentityUserId == identityUserId);
+                .SingleOrDefaultAsync(u => u.IdentityUserId == identityUserId);
 
             if (appUser == null)
                 return NotFound();
 
-            return View(appUser); // Views/User/Profile.cshtml expects @model Campus_Book_Connect.Models.User
+            return View(appUser);
         }
 
-        // Optional: if you ever wire AccessDeniedPath to this
+        // Optional landing if AccessDeniedPath ever points here
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult AccessDenied() => RedirectToAction(nameof(Login));
     }
 }

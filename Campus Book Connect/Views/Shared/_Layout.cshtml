@@ -157,7 +157,9 @@
                                     <li><a class="dropdown-item" asp-controller="Marketplace" asp-action="Sell"><i class="fas fa-book-medical me-2"></i>Make a Listing</a></li>
                                     <li><a class="dropdown-item" asp-controller="Transaction" asp-action="History"><i class="fas fa-clock-rotate-left me-2"></i>Transaction History</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="User" asp-action="Logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                                    <li>
+                                        <a href="#" class="dropdown-item" data-logout>
+                                            <i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                                 </ul>
                             </li>
                         }
@@ -203,5 +205,21 @@
     </script>
 
     @RenderSection("Scripts", required: false)
+
+    <form id="logoutForm" asp-area="" asp-controller="User" asp-action="Logout" method="post" style="display:none">
+        @Html.AntiForgeryToken()
+    </form>
+    <script>
+        document.addEventListener('click', function (e) {
+            // Any element with data-logout will submit the POST form
+            const t = e.target.closest('[data-logout]');
+            if (t) {
+                e.preventDefault();
+                const f = document.getElementById('logoutForm');
+                if (f) f.submit();
+            }
+        });
+    </script>
+
 </body>
 </html>
